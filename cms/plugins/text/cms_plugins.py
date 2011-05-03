@@ -25,6 +25,9 @@ class TextPlugin(CMSPluginBase):
         if USE_TINYMCE and "tinymce" in settings.INSTALLED_APPS:
             from cms.plugins.text.widgets.tinymce_widget import TinyMCEEditor
             return TinyMCEEditor(installed_plugins=plugins)
+        elif USE_CKEDITOR and "ckeditor" in settings.INSTALLED_APPS:
+            from cms.plugins.text.widgets.ckeditor_widget import CKEditor
+            return CKEditor(installed_plugins=plugins)
         else:
             return WYMEditor(installed_plugins=plugins)
 
