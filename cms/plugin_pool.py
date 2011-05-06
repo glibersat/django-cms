@@ -17,8 +17,10 @@ class PluginPool(object):
         for app in settings.INSTALLED_APPS:
             try:
                 import_module('.cms_plugins', app)
-            except ImportError:
+            except ImportError, e:
+                print app, e
                 pass
+        
 
     def register_plugin(self, plugin_or_iterable):
         """

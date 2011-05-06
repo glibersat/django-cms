@@ -1,7 +1,5 @@
 from django.conf import settings
 
-print "pouyou"
-
 # Uses TinyMCE or CKEditor as editor (no inline plugins). Requires django-tinymce or django-ckeditor app. 
 # If false, then WYMEditor is used. 
 USE_TINYMCE = getattr(settings, 'CMS_USE_TINYMCE', "tinymce" in settings.INSTALLED_APPS)
@@ -12,11 +10,7 @@ if USE_TINYMCE:
     TINYMCE_CONFIG = getattr(settings, 'CMS_PLUGIN_TEXT_TINYMCE_CONFIG', tinymce.settings.DEFAULT_CONFIG)
 
 if USE_CKEDITOR:
-    print "using CK"
-    import ckeditor.setttings
-    CKEDITOR_CONFIG = getattr(settings, 'CMS_PLUGIN_TEXT_CKEDITOR_CONFIG')
-
-print "not using ck"
+    CKEDITOR_CONFIG = getattr(settings, 'CMS_PLUGIN_TEXT_CKEDITOR_CONFIG', {})
 
 WYM_TOOLS = ",\n".join([
     "{'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'}",

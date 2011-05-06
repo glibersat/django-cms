@@ -6,7 +6,7 @@ from cms.plugins.text.forms import TextForm
 from cms.plugins.text.widgets.wymeditor_widget import WYMEditor
 from cms.plugins.text.utils import plugin_tags_to_user_html
 from django.forms.fields import CharField
-from cms.plugins.text.settings import USE_TINYMCE
+from cms.plugins.text.settings import USE_TINYMCE, USE_CKEDITOR
 from django.conf import settings
 
 
