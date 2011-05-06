@@ -18,7 +18,6 @@ class PluginPool(object):
             try:
                 import_module('.cms_plugins', app)
             except ImportError, e:
-                print app, e
                 pass
         
 
