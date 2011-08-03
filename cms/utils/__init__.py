@@ -39,8 +39,6 @@ def get_language_from_request(request, current_page=None):
     """
     Return the most obvious language according the request
     """
-    if settings.CMS_DBGETTEXT: 
-        return get_default_language()
     language = request.REQUEST.get('language', None)
     if language:
         if not language in dict(settings.CMS_LANGUAGES).keys():
@@ -75,3 +73,11 @@ def get_page_from_request(request):
          "'cms.utils.page_resolver.get_page_from_request' and will be removed "
          "in Django-CMS 2.2.", DeprecationWarning)
     return new(request)
+
+def cms_media(suffix):
+    '''
+    Helper that prefixes a URL with CMS_MEDIA_URL
+    '''
+    if suffix:
+        return u'%s%s' % (settings.CMS_MEDIA_URL, suffix)
+    return ''

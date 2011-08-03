@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from cms.utils.helpers import reversion_register
-from cms.utils.placeholder import PlaceholderNoAction
+import operator
+
 from django.db import models
 from django.forms.widgets import Media
 from django.utils.translation import ugettext_lazy as _
-import operator
 
+from cms.utils.helpers import reversion_register
+from cms.utils.placeholder import PlaceholderNoAction
 
 class Placeholder(models.Model):
     slot = models.CharField(_("slot"), max_length=50, db_index=True, editable=False)
@@ -50,7 +51,9 @@ class Placeholder(models.Model):
         from cms.plugin_rendering import render_placeholder
         if not 'request' in context:
             return '<!-- missing request -->'
-        context.update({'width': width or self.default_width})
+        width = width or self.default_width
+        if width:
+            context.update({'width': width})
         return render_placeholder(self, context)
 
     def get_media(self, request, context):
@@ -66,7 +69,7 @@ class Placeholder(models.Model):
         """
         from cms.models import CMSPlugin
         for rel in self._meta.get_all_related_objects():
-            if isinstance(rel.model, CMSPlugin):
+            if issubclass(rel.model, CMSPlugin):
                 continue
             field = getattr(self, rel.get_accessor_name())
             if field.count():
@@ -77,7 +80,7 @@ class Placeholder(models.Model):
         if not hasattr(self, '_attached_field_cache'):
             self._attached_field_cache = None
             for rel in self._meta.get_all_related_objects():
-                if isinstance(rel.model, CMSPlugin):
+                if issubclass(rel.model, CMSPlugin):
                     continue
                 field = getattr(self, rel.get_accessor_name())
                 if field.count():
